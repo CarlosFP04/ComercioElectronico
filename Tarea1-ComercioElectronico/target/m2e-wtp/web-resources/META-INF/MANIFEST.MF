@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: Tarea1-ComercioElectronico
+Implementation-Version: 0.1
+Built-By: cfigueroa
+Implementation-Vendor-Id: com.comercioelectr.app
+Build-Jdk: 1.8.0_181
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/Tarea1-ComercioElectronico
+Created-By: Maven Integration for Eclipse
+
