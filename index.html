@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title> POST XMLHttpRequest - JavaScript - dcode</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	 crossorigin="anonymous">
+</head>
+
+<body>
+	<center>
+		<h1>CEMON</h1>
+		<div class="form-group">
+
+			<label for="year">Año:</label>
+			<input type="text" id="year">
+			<br>
+			<br>
+			<label for="month">Mes:</label>
+			<input type="text" id="month">
+			<br>
+			<br>
+			<button type="submit" class="btn btn-primary" id="botoncio">POST</button>
+
+
+		</div>
+		<table id="finally" border="2">
+			<tr>
+				<td>Database Disponibility: </td>
+				<td id="Database"></td>
+			</tr>
+			<tr>
+				<td>Hardware Disponibility: </td>
+				<td id="Hardware"></td>
+			</tr>
+			<tr>
+				<td>Application Disponibility: </td>
+				<td id="Application"></td>
+			</tr>
+			<tr>
+				<td>Network Disponibility: </td>
+				<td id="Network"></td>
+			</tr>
+			<tr>
+				<td>Router Disponibility: </td>
+				<td id="Router"></td>
+			</tr>
+			<tr>
+				<td>Total Disponibility: </td>
+				<td id="Total"></td>
+			</tr>
+		</table>
+	</center>
+
+
+	<script type="text/javascript">
+		const form = {
+			year: document.getElementById('year'),
+			month: document.getElementById('month'),
+			submit: document.getElementById('botoncio')
+		};
+		form.submit.addEventListener('click', () => {
+			const request = new XMLHttpRequest();
+			var okStatus;
+
+			request.timeout = 1000;
+
+			request.onload = () => {
+
+				var response = JSON.parse(request.responseText);
+				if (request.readyState == 4 && request.status == "200") {
+					document.getElementById(`${response.componentName}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+				} else {
+					document.getElementById(`${response.componentName}`).innerHTML = "No response";
+
+					okStatus = -1;
+				}
+			};
+
+			var data = {};
+			data.componentName = "Database";
+			data.year = `${form.year.value}`;
+			data.month = `${form.month.value}`;
+
+			console.log(data);
+
+			request.open('POST', 'http://localhost:4000/component/database', true);
+			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			request.ontimeout = () => { document.getElementById("Database").innerHTML = "No response"; okStatus = -1; }
+			request.send(JSON.stringify(data));
+
+			///////////////termina Database
+
+			const request2 = new XMLHttpRequest();
+
+			request2.timeout = 1000;
+
+			request2.onload = () => {
+
+				var response = JSON.parse(request2.responseText);
+				if (request2.readyState == 4 && request2.status == "200") {
+					document.getElementById(`${response.componentName}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+				} else {
+					document.getElementById(`${response.componentName}`).innerHTML = "No response";
+					okStatus = -1;
+				}
+			};
+
+			data.componentName = "Hardware";
+
+			console.log(data);
+
+			request2.open('POST', 'http://localhost:4001/component/hardware', true);
+			request2.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			request2.ontimeout = () => { document.getElementById("Hardware").innerHTML = "No response"; okStatus = -1; }
+			request2.send(JSON.stringify(data));
+
+			//////////////termina Hardware
+
+			const request3 = new XMLHttpRequest();
+
+			request3.timeout = 1000;
+
+			request3.onload = () => {
+
+				var response = JSON.parse(request3.responseText);
+				if (request3.readyState == 4 && request3.status == "200") {
+					document.getElementById(`${response.componentName}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+				} else {
+					document.getElementById(`${response.componentName}`).innerHTML = "No response";
+					okStatus = -1;
+				}
+			};
+
+			data.componentName = "Application";
+
+			console.log(data);
+
+			request3.open('POST', 'http://localhost:4002/component/application', true);
+			request3.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			request3.ontimeout = () => { document.getElementById("Application").innerHTML = "No response"; okStatus = -1; }
+			request3.send(JSON.stringify(data));
+
+			///////////////termina application
+
+			const request4 = new XMLHttpRequest();
+
+			request4.timeout = 1000;
+
+			request4.onload = () => {
+
+				var response = JSON.parse(request4.responseText);
+				if (request4.readyState == 4 && request4.status == "200") {
+					document.getElementById(`${response.componentName}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+				} else {
+					document.getElementById(`${response.componentName}`).innerHTML = "No response";
+					okStatus = -1;
+				}
+			};
+
+			data.componentName = "Network";
+
+			console.log(data);
+
+			request4.open('POST', 'http://localhost:4003/component/network', true);
+			request4.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			request4.ontimeout = () => { document.getElementById("Network").innerHTML = "No response"; okStatus = -1; }
+			request4.send(JSON.stringify(data));
+
+			/////////////////termina network
+
+			const request5 = new XMLHttpRequest();
+
+			request5.timeout = 1000;
+
+			request5.onload = () => {
+				var response = JSON.parse(request5.responseText);
+				if (request5.readyState == 4 && request5.status == "200") {
+					document.getElementById(`${response.componentName}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+				} else {
+					document.getElementById(`${response.componentName}`).innerHTML = "No response";
+					okStatus = -1;
+				}
+			};
+
+			data.componentName = "Router";
+
+			console.log(data);
+
+			request5.open('POST', 'http://localhost:4004/component/router', true);
+			request5.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			request5.ontimeout = () => { document.getElementById("Router").innerHTML = "No response"; okStatus = -1; }
+			request5.send(JSON.stringify(data));
+
+			console.log(okStatus);
+			if (okStatus == -1) {
+				document.getElementById("Total").innerHTML = "0%";
+			}
+
+		});
+
+	</script>
+</body>
+
+</html>
