@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +25,12 @@ import com.google.gson.Gson;
 
 @RestController
 @RequestMapping("component")
+@CrossOrigin
 public class NetworkController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(NetworkController.class);
 	
-	@PostMapping(path="/network",produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@PostMapping(path="/network",produces= "application/json")
 	public ResponseEntity<?> databaseComponent(@Valid @RequestBody ComponentBody body, BindingResult result) {
 		Map<String, Object> response = new HashMap<String, Object>();
 		LOGGER.info("Errores: " + result.hasErrors());

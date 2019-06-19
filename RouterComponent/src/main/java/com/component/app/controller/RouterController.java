@@ -26,11 +26,11 @@ import com.google.gson.Gson;
 @RestController
 @RequestMapping("component")
 @CrossOrigin
-public class ApplicationController {
+public class RouterController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RouterController.class);
 	
-	@PostMapping(path="/application",produces= "application/json")
+	@PostMapping(path="/router",produces= "application/json")
 	public ResponseEntity<?> databaseComponent(@Valid @RequestBody ComponentBody body, BindingResult result) {
 		Map<String, Object> response = new HashMap<String, Object>();
 		LOGGER.info("Errores: " + result.hasErrors());
