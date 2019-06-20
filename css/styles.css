@@ -1,0 +1,159 @@
+
+/* gris oscuro = #1d252c:
+gris claro = #626262;
+background gris = #1b2127;
+celeste =  #026fff;
+*/
+
+
+.header {
+  background-color: #1d252c;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  height: 15px;
+  align-items: center;
+  padding: 10px;
+}
+
+body{
+  font-family: 'Source Sans Pro', sans-serif;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Fjalla One', sans-serif;
+  font-weight: 200;
+}
+
+#finally{
+  font-family: 'Fjalla One', sans-serif;
+  font-weight: 200;
+  display: inline-flex;
+  vertical-align: center;
+  align-content: center;
+}
+
+h1{
+  font-size: 40px;
+  line-height: 1.5em;
+  letter-spacing: -.2px;
+  color: white;
+  margin: 10;
+
+}
+
+
+h1 strong{
+  color: #026fff;
+}
+
+h2 {
+  color: #026fff;
+  text-transform: uppercase;
+  font-family: 'Source Sans Pro';
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 40px;
+}
+.hero{
+  height: 40px;
+  background-color: #1d252c;
+  background-size: 500px 300px;
+  background-repeat: no-repeat;
+  background-position-x: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.portfolio{
+    background: #FAFAFA;
+    padding: 20px;
+}
+
+.project{
+  /*border-top: 10px solid red;
+  border-right: 10px solid green;
+  border-left: 10px solid blue;
+  border-bottom: 10px solid pink;*/
+  /* border-top-color: red;
+  border-top-width: 15px;
+  border-top-style: solid; */
+  border: 1px solid gray;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  padding: 20px;
+  /* margin: 10px; */
+  background: white;
+  /* margin-right: 0%;
+  margin-left: 0%; */
+  display: flex;
+  min-width: auto;
+  min-height: auto;
+}
+
+.project-title{
+  font-size: 30px;
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+.project-details{
+  width: 500px;
+ /* display: inline-flex;*/
+}
+
+
+
+.project-imageContainer{
+  width: 500px;
+}
+
+.project-course{
+  margin: 10px 0;
+}
+
+.project-date{
+  margin: 10px 0;
+}
+
+.project-url{
+  margin: 10px 0;
+}
+
+.project-description{
+  font-size: 20px;
+}
+
+.flexbox{
+display: flex;
+flex-wrap: wrap;
+}
+
+.box{
+  width: 200px;
+  height: 200px;
+  border: 1px solid red;
+  margin: 10px;
+
+}
+#calcular{
+  color: #026fff;
+}
+
+
+.resultado{
+  width: 50px;
+  height: 50px;
+  display: none;
+}
+
+#botoncio{
+  align-content: 50%;
+}
+
+#calculo{
+  display: none;
+}

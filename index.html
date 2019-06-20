@@ -2,55 +2,96 @@
 <html>
 
 <head>
-	<title> POST XMLHttpRequest - JavaScript - dcode</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	 crossorigin="anonymous">
+	<meta charset="utf-8">
+		<title>CEMON</title>
+		<link rel="icon" type="image/png" href="images/favicon.ico"/>
+		<link rel="stylesheet" href="./css/styles.css">
+		<link href="https://fonts.googleapis.com/css?family=Fjalla+One|Source+Sans+Pro" rel="stylesheet">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	 		crossorigin="anonymous">
 </head>
 
 <body>
 	<center>
-		<h1>CEMON</h1>
-		<div class="form-group">
+	<header class="header"></header>
+	<section class="hero">
+		<h1 id="titulazo">
+			<strong>CEMON</strong>
+		</h1>
+	</section>
+    <section id="portafolio" class="portfolio">
+		<h2>Consulta del servicio</h2>
+		<h3 class="project-title">Servicios de <strong>Comercio Electronico</strong></h3>
+		<article class="project">
+			<div class="project-details">
+			
+			<div class="form-group project-details">
 
-			<label for="year">Año:</label>
-			<input type="text" id="year">
-			<br>
-			<br>
-			<label for="month">Mes:</label>
-			<input type="text" id="month">
-			<br>
-			<br>
-			<button type="submit" class="btn btn-primary" id="botoncio">POST</button>
+				<label for="year">Año:</label>
+				<input type="text" id="year">
+				<br>
+				<br>
+				<label for="month">Mes:</label>
+				<input type="text" id="month">
+				<br>
+				<br>
+				<button type="submit" class="btn btn-primary" id="botoncio">POST</button>
 
 
-		</div>
-		<table id="finally" border="2">
-			<tr>
-				<td>Database Disponibility: </td>
-				<td id="Database"></td>
-			</tr>
-			<tr>
-				<td>Hardware Disponibility: </td>
-				<td id="Hardware"></td>
-			</tr>
-			<tr>
-				<td>Application Disponibility: </td>
-				<td id="Application"></td>
-			</tr>
-			<tr>
-				<td>Network Disponibility: </td>
-				<td id="Network"></td>
-			</tr>
-			<tr>
-				<td>Router Disponibility: </td>
-				<td id="Router"></td>
-			</tr>
-			<tr>
-				<td>Total Disponibility: </td>
-				<td id="Total"></td>
-			</tr>
-		</table>
-	</center>
+			</div>
+				<table id="finally" border="2">
+					<tr>
+						<td>Database Disponibility: </td>
+						<td id="Database"></td>
+						<td>
+							<img src="./images/good.png" class="resultado" id="good1">
+							<img src="./images/bad.png" class="resultado" id="bad1">
+						</td>
+					</tr>
+					<tr>
+						<td>Hardware Disponibility: </td>
+						<td id="Hardware"></td>
+						<td>
+							<img src="./images/good.png" class="resultado" id="good2">
+							<img src="./images/bad.png" class="resultado" id="bad2">
+						</td>
+					</tr>
+					<tr>
+						<td>Application Disponibility: </td>
+						<td id="Application"></td>
+						<td>
+							<img src="./images/good.png" class="resultado" id="good3">
+							<img src="./images/bad.png" class="resultado" id="bad3">
+						</td>
+					</tr>
+					<tr>
+						<td>Network Disponibility: </td>
+						<td id="Network"></td>
+						<td>
+							<img src="./images/good.png" class="resultado" id="good4">
+						  	<img src="./images/bad.png" class="resultado" id="bad4">
+						</td>
+					</tr>
+					<tr>
+						<td>Router Disponibility: </td>
+						<td id="Router"></td>
+						<td>
+							<img src="./images/good.png" class="resultado" id="good5">
+							<img src="./images/bad.png" class="resultado" id="bad5">
+						</td>
+					</tr>
+					<tr>
+						<td>Total Disponibility: </td>
+						<td id="Total"></td>
+					</tr>
+					<tr>
+						<td id="calculo">1</td>
+					</tr>
+				</table>
+			</div>
+		</article>
+	</section>
+</center>
 
 
 	<script type="text/javascript">
@@ -59,7 +100,11 @@
 			month: document.getElementById('month'),
 			submit: document.getElementById('botoncio')
 		};
-		form.submit.addEventListener('click', () => {
+		form.submit.addEventListener('click', doAll) 
+		
+		
+		
+		function doAll() {
 			const request = new XMLHttpRequest();
 			var okStatus;
 
@@ -70,9 +115,26 @@
 				var response = JSON.parse(request.responseText);
 				if (request.readyState == 4 && request.status == "200") {
 					document.getElementById(`${response.componentName}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
-				} else {
-					document.getElementById(`${response.componentName}`).innerHTML = "No response";
+					
+					var texto = document.getElementById('calculo').innerText;
+					var calculamesta = parseFloat(texto);
+					console.log(calculamesta);
+					calculamesta *= response.disponibility;
+					document.getElementById('calculo').innerHTML = calculamesta;
 
+					if(response.disponibility * 100 > 20) {
+						document.getElementById('good1').style.display = "block";
+						document.getElementById('bad1').style.display = "none";
+					}
+					else {
+						document.getElementById('bad1').style.display = "block";
+						document.getElementById('good1').style.display = "none";
+					}
+				} else {
+					document.getElementById('bad1').style.display = "block";
+					document.getElementById('good1').style.display = "none";
+					document.getElementById('calculo').innerHTML = 0;
+					document.getElementById(`${response.componentName}`).innerHTML = "No response";
 					okStatus = -1;
 				}
 			};
@@ -100,9 +162,27 @@
 				var response = JSON.parse(request2.responseText);
 				if (request2.readyState == 4 && request2.status == "200") {
 					document.getElementById(`${response.componentName}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+					
+					var texto = document.getElementById('calculo').innerText;
+					var calculamesta = parseFloat(texto);
+					console.log(calculamesta);
+					calculamesta *= response.disponibility;
+					document.getElementById('calculo').innerHTML = calculamesta;
+					
+					if(response.disponibility * 100 > 20) {
+						document.getElementById('good2').style.display = "block";
+						document.getElementById('bad2').style.display = "none";
+					}
+					else {
+						document.getElementById('bad2').style.display = "block";
+						document.getElementById('good2').style.display = "none";
+					}
 				} else {
 					document.getElementById(`${response.componentName}`).innerHTML = "No response";
 					okStatus = -1;
+					document.getElementById('bad2').style.display = "block";
+					document.getElementById('good2').style.display = "none";
+					document.getElementById('calculo').innerHTML = 0;
 				}
 			};
 
@@ -126,9 +206,27 @@
 				var response = JSON.parse(request3.responseText);
 				if (request3.readyState == 4 && request3.status == "200") {
 					document.getElementById(`${response.componentName}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+					
+					var texto = document.getElementById('calculo').innerText;
+					var calculamesta = parseFloat(texto);
+					console.log(calculamesta);
+					calculamesta *= response.disponibility;
+					document.getElementById('calculo').innerHTML = calculamesta;
+
+					if(response.disponibility * 100 > 20) {
+						document.getElementById('good3').style.display = "block";
+						document.getElementById('bad3').style.display = "none";
+					}
+					else {
+						document.getElementById('bad3').style.display = "block";
+						document.getElementById('good3').style.display = "none";
+					}
 				} else {
 					document.getElementById(`${response.componentName}`).innerHTML = "No response";
 					okStatus = -1;
+					document.getElementById('bad3').style.display = "block";
+					document.getElementById('good3').style.display = "none";
+					document.getElementById('calculo').innerHTML = 0;
 				}
 			};
 
@@ -152,9 +250,27 @@
 				var response = JSON.parse(request4.responseText);
 				if (request4.readyState == 4 && request4.status == "200") {
 					document.getElementById(`${response.componentName}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+					
+					var texto = document.getElementById('calculo').innerText;
+					var calculamesta = parseFloat(texto);
+					console.log(calculamesta);
+					calculamesta *= response.disponibility;
+					document.getElementById('calculo').innerHTML = calculamesta;
+					
+					if(response.disponibility * 100 > 20) {
+						document.getElementById('good4').style.display = "block";
+						document.getElementById('bad4').style.display = "none";
+					}
+					else {
+						document.getElementById('bad4').style.display = "block";
+						document.getElementById('good4').style.display = "none";
+					}
 				} else {
 					document.getElementById(`${response.componentName}`).innerHTML = "No response";
 					okStatus = -1;
+					document.getElementById('bad4').style.display = "block";
+					document.getElementById('good4').style.display = "none";
+					document.getElementById('calculo').innerHTML = 0;
 				}
 			};
 
@@ -177,7 +293,25 @@
 				var response = JSON.parse(request5.responseText);
 				if (request5.readyState == 4 && request5.status == "200") {
 					document.getElementById(`${response.componentName}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+					
+					var texto = document.getElementById('calculo').innerText;
+					var calculamesta = parseFloat(texto);
+					console.log(calculamesta);
+					calculamesta *= response.disponibility;
+					document.getElementById('calculo').innerHTML = calculamesta;
+
+					if(response.disponibility * 100 > 20) {
+						document.getElementById('good5').style.display = "block";
+						document.getElementById('bad5').style.display = "none";
+					}
+					else {
+						document.getElementById('bad5').style.display = "block";
+						document.getElementById('good5').style.display = "none";
+					}
 				} else {
+					document.getElementById('bad1').style.display = "block";
+					document.getElementById('good1').style.display = "none";
+					document.getElementById('calculo').innerHTML = 0;
 					document.getElementById(`${response.componentName}`).innerHTML = "No response";
 					okStatus = -1;
 				}
@@ -197,7 +331,17 @@
 				document.getElementById("Total").innerHTML = "0%";
 			}
 
-		});
+			
+
+			setTimeout(function(){
+				var texto = document.getElementById('calculo').innerText;
+				var total = parseFloat(texto);
+				console.log(texto);
+				document.getElementById('Total').innerHTML = Math.trunc(total * 100) + "%";
+				document.getElementById('calculo').innerHTML = 1;
+				}, 1500);
+		};
+
 
 	</script>
 </body>
