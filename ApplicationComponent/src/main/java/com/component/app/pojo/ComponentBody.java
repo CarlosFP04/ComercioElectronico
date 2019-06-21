@@ -11,37 +11,29 @@ public class ComponentBody implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@NotNull
-	private String componentName;
+	private String name;
 	@NotNull
-	private String month;
-	@NotNull
-	private String year;
+	private String date;
+	
 	
 	public ComponentBody () {
 		
 	}
 
-	public String getComponentName() {
-		return componentName;
+	public String getName() {
+		return name;
 	}
 
-	public void setComponentName(String componentName) {
-		this.componentName = componentName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getMonth() {
-		return month;
+	public String getDate() {
+		return date;
 	}
 
-	public void setMonth(String month) {
-		this.month = month;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
-	public String getYear() {
-		return year;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
-	}
 }

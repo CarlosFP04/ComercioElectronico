@@ -49,7 +49,7 @@ public class DatabaseController {
 		
 		ComponentResponse componentResponse = new ComponentResponse();
 
-		componentResponse.setComponentName(body.getComponentName());
+		componentResponse.setComponentName(body.getName());
 		componentResponse.setDisponibility(disponibility);
 		
 		return new ResponseEntity<>(gson.toJson(componentResponse), HttpStatus.OK);
