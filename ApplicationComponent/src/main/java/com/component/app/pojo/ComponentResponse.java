@@ -9,19 +9,19 @@ public class ComponentResponse implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private String name;
+	private String componentName;
 	private double disponibility;
 	
 	public ComponentResponse() {
 		
 	}
 
-	public String getName() {
-		return name;
+	public String getComponentName() {
+		return componentName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setComponentName(String componentName) {
+		this.componentName = componentName;
 	}
 
 	public double getDisponibility() {

@@ -49,7 +49,7 @@ public class NetworkController {
 		
 		ComponentResponse componentResponse = new ComponentResponse();
 
-		componentResponse.setComponentName(body.getName());
+		componentResponse.setComponentName(body.getComponentName());
 		componentResponse.setDisponibility(disponibility);
 		
 		return new ResponseEntity<>(gson.toJson(componentResponse), HttpStatus.OK);

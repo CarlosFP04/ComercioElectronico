@@ -49,7 +49,7 @@ public class ApplicationController {
 		
 		ComponentResponse componentResponse = new ComponentResponse();
 
-		componentResponse.setName(body.getName());
+		componentResponse.setComponentName(body.getComponentName());
 		componentResponse.setDisponibility(disponibility);
 		
 		return new ResponseEntity<>(gson.toJson(componentResponse), HttpStatus.OK);
