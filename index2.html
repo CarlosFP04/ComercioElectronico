@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+		<title>CEMON</title>
+		<link rel="icon" type="image/png" href="images/favicon.ico"/>
+		<link rel="stylesheet" href="./css/styles.css">
+		<link href="https://fonts.googleapis.com/css?family=Fjalla+One|Source+Sans+Pro" rel="stylesheet">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	 		crossorigin="anonymous">
+</head>
+
+<body>
+	<center>
+	<header class="header"></header>
+	<section class="hero">
+		<h1 id="titulazo">
+			<strong>CEMON</strong>
+		</h1>
+	</section>
+    <section id="portafolio" class="portfolio">
+		<h2>Consulta del servicio</h2>
+		<h3 class="project-title">Servicios de <strong>Comercio Electronico</strong></h3>
+		<article class="project">
+			<div class="project-details">
+			
+			<div class="form-group project-details">
+
+				<label for="date">Fecha:</label>
+				<input type="month" id="date">
+				<br>
+				<br>
+				<button type="submit" class="btn btn-primary" id="botoncio">Consultar</button>
+
+
+			</div>
+				<table id="finally" border="2">
+					<tr>
+						<td>Database Disponibility: </td>
+						<td id="Database"></td>
+						<td>
+							<img src="./images/good.png" class="resultado" id="good1">
+							<img src="./images/bad.png" class="resultado" id="bad1">
+						</td>
+					</tr>
+					<tr>
+						<td>Hardware Disponibility: </td>
+						<td id="Hardware"></td>
+						<td>
+							<img src="./images/good.png" class="resultado" id="good2">
+							<img src="./images/bad.png" class="resultado" id="bad2">
+						</td>
+					</tr>
+					<tr>
+						<td>Application Disponibility: </td>
+						<td id="Application"></td>
+						<td>
+							<img src="./images/good.png" class="resultado" id="good3">
+							<img src="./images/bad.png" class="resultado" id="bad3">
+						</td>
+					</tr>
+					<tr>
+						<td>Network Disponibility: </td>
+						<td id="Network"></td>
+						<td>
+							<img src="./images/good.png" class="resultado" id="good4">
+						  	<img src="./images/bad.png" class="resultado" id="bad4">
+						</td>
+					</tr>
+					<tr>
+						<td>Router Disponibility: </td>
+						<td id="Router"></td>
+						<td>
+							<img src="./images/good.png" class="resultado" id="good5">
+							<img src="./images/bad.png" class="resultado" id="bad5">
+						</td>
+					</tr>
+					<tr>
+						<td>Total Disponibility: </td>
+						<td id="Total"></td>
+					</tr>
+					<tr>
+						<td id="calculo">1</td>
+					</tr>
+				</table>
+			</div>
+		</article>
+	</section>
+</center>
+
+
+	<script type="text/javascript">
+		const form = {
+			date: document.getElementById('date'),
+			submit: document.getElementById('botoncio')
+		};
+		form.submit.addEventListener('click', doAll) 
+		
+		
+		
+		function doAll() {
+			const request = new XMLHttpRequest();
+			var okStatus;
+
+			request.timeout = 1000;
+
+			request.onload = () => {
+
+				var response = JSON.parse(request.responseText);
+				if (request.readyState == 4 && request.status == "200") {
+					document.getElementById(`${response.name}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+					
+					var texto = document.getElementById('calculo').innerText;
+					var calculamesta = parseFloat(texto);
+					console.log(calculamesta);
+					calculamesta *= response.disponibility;
+					document.getElementById('calculo').innerHTML = calculamesta;
+
+					if(response.disponibility * 100 > 20) {
+						document.getElementById('good1').style.display = "block";
+						document.getElementById('bad1').style.display = "none";
+					}
+					else {
+						document.getElementById('bad1').style.display = "block";
+						document.getElementById('good1').style.display = "none";
+					}
+				} else {
+					document.getElementById('bad1').style.display = "block";
+					document.getElementById('good1').style.display = "none";
+					document.getElementById('calculo').innerHTML = 0;
+					document.getElementById(`${response.name}`).innerHTML = "No response";
+					okStatus = -1;
+				}
+			};
+
+			var data = {};
+			data.name = "Database";
+			data.date = `${form.date.value}`;
+
+			console.log(data);
+
+			request.open('POST', 'https://cemon-banco-2.herokuapp.com/component/database', true);
+			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			request.ontimeout = () => { document.getElementById("Database").innerHTML = "No response"; okStatus = -1; }
+			request.send(JSON.stringify(data));
+
+			///////////////termina Database
+
+			const request2 = new XMLHttpRequest();
+
+			request2.timeout = 1000;
+
+			request2.onload = () => {
+
+				var response = JSON.parse(request2.responseText);
+				if (request2.readyState == 4 && request2.status == "200") {
+					document.getElementById(`${response.name}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+					
+					var texto = document.getElementById('calculo').innerText;
+					var calculamesta = parseFloat(texto);
+					console.log(calculamesta);
+					calculamesta *= response.disponibility;
+					document.getElementById('calculo').innerHTML = calculamesta;
+					
+					if(response.disponibility * 100 > 20) {
+						document.getElementById('good2').style.display = "block";
+						document.getElementById('bad2').style.display = "none";
+					}
+					else {
+						document.getElementById('bad2').style.display = "block";
+						document.getElementById('good2').style.display = "none";
+					}
+				} else {
+					document.getElementById(`${response.name}`).innerHTML = "No response";
+					okStatus = -1;
+					document.getElementById('bad2').style.display = "block";
+					document.getElementById('good2').style.display = "none";
+					document.getElementById('calculo').innerHTML = 0;
+				}
+			};
+
+			data.name = "Hardware";
+
+			console.log(data);
+
+			request2.open('POST', 'https://cemon-banco-2.herokuapp.com/component/hardware', true);
+			request2.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			request2.ontimeout = () => { document.getElementById("Hardware").innerHTML = "No response"; okStatus = -1; }
+			request2.send(JSON.stringify(data));
+
+			//////////////termina Hardware
+
+			const request3 = new XMLHttpRequest();
+
+			request3.timeout = 1000;
+
+			request3.onload = () => {
+
+				var response = JSON.parse(request3.responseText);
+				if (request3.readyState == 4 && request3.status == "200") {
+					document.getElementById(`${response.name}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+					
+					var texto = document.getElementById('calculo').innerText;
+					var calculamesta = parseFloat(texto);
+					console.log(calculamesta);
+					calculamesta *= response.disponibility;
+					document.getElementById('calculo').innerHTML = calculamesta;
+
+					if(response.disponibility * 100 > 20) {
+						document.getElementById('good3').style.display = "block";
+						document.getElementById('bad3').style.display = "none";
+					}
+					else {
+						document.getElementById('bad3').style.display = "block";
+						document.getElementById('good3').style.display = "none";
+					}
+				} else {
+					document.getElementById(`${response.name}`).innerHTML = "No response";
+					okStatus = -1;
+					document.getElementById('bad3').style.display = "block";
+					document.getElementById('good3').style.display = "none";
+					document.getElementById('calculo').innerHTML = 0;
+				}
+			};
+
+			data.name = "Application";
+
+			console.log(data);
+
+			request3.open('POST', 'https://cemon-banco-2.herokuapp.com/component/application', true);
+			request3.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			request3.ontimeout = () => { document.getElementById("Application").innerHTML = "No response"; okStatus = -1; }
+			request3.send(JSON.stringify(data));
+
+			///////////////termina application
+
+			const request4 = new XMLHttpRequest();
+
+			request4.timeout = 1000;
+
+			request4.onload = () => {
+
+				var response = JSON.parse(request4.responseText);
+				if (request4.readyState == 4 && request4.status == "200") {
+					document.getElementById(`${response.name}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+					
+					var texto = document.getElementById('calculo').innerText;
+					var calculamesta = parseFloat(texto);
+					console.log(calculamesta);
+					calculamesta *= response.disponibility;
+					document.getElementById('calculo').innerHTML = calculamesta;
+					
+					if(response.disponibility * 100 > 20) {
+						document.getElementById('good4').style.display = "block";
+						document.getElementById('bad4').style.display = "none";
+					}
+					else {
+						document.getElementById('bad4').style.display = "block";
+						document.getElementById('good4').style.display = "none";
+					}
+				} else {
+					document.getElementById(`${response.name}`).innerHTML = "No response";
+					okStatus = -1;
+					document.getElementById('bad4').style.display = "block";
+					document.getElementById('good4').style.display = "none";
+					document.getElementById('calculo').innerHTML = 0;
+				}
+			};
+
+			data.name = "Network";
+
+			console.log(data);
+
+			request4.open('POST', 'https://cemon-banco-2.herokuapp.com/component/network', true);
+			request4.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			request4.ontimeout = () => { document.getElementById("Network").innerHTML = "No response"; okStatus = -1; }
+			request4.send(JSON.stringify(data));
+
+			/////////////////termina network
+
+			const request5 = new XMLHttpRequest();
+
+			request5.timeout = 1000;
+
+			request5.onload = () => {
+				var response = JSON.parse(request5.responseText);
+				if (request5.readyState == 4 && request5.status == "200") {
+					document.getElementById(`${response.name}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+					
+					var texto = document.getElementById('calculo').innerText;
+					var calculamesta = parseFloat(texto);
+					console.log(calculamesta);
+					calculamesta *= response.disponibility;
+					document.getElementById('calculo').innerHTML = calculamesta;
+
+					if(response.disponibility * 100 > 20) {
+						document.getElementById('good5').style.display = "block";
+						document.getElementById('bad5').style.display = "none";
+					}
+					else {
+						document.getElementById('bad5').style.display = "block";
+						document.getElementById('good5').style.display = "none";
+					}
+				} else {
+					document.getElementById('bad1').style.display = "block";
+					document.getElementById('good1').style.display = "none";
+					document.getElementById('calculo').innerHTML = 0;
+					document.getElementById(`${response.name}`).innerHTML = "No response";
+					okStatus = -1;
+				}
+			};
+
+			data.name = "Router";
+
+			console.log(data);
+
+			request5.open('POST', 'https://cemon-banco-2.herokuapp.com/component/router', true);
+			request5.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			request5.ontimeout = () => { document.getElementById("Router").innerHTML = "No response"; okStatus = -1; }
+			request5.send(JSON.stringify(data));
+
+			console.log(okStatus);
+			if (okStatus == -1) {
+				document.getElementById("Total").innerHTML = "0%";
+			}
+
+			
+
+			setTimeout(function(){
+				var texto = document.getElementById('calculo').innerText;
+				var total = parseFloat(texto);
+				console.log(texto);
+				document.getElementById('Total').innerHTML = Math.trunc(total * 100) + "%";
+				document.getElementById('calculo').innerHTML = 1;
+				}, 1500);
+		};
+
+
+	</script>
+</body>
+
+</html>
