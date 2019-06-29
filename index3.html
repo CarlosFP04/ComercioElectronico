@@ -283,7 +283,7 @@
                                 <table id="finally" border="2">
                                     <tr>
                                         <td>Database Disponibility: </td>
-                                        <td id="Base de Datos"></td>
+                                        <td id="Base de Datos_t1"></td>
                                         <td>
                                             <img src="./images/good.png" class="resultado" id="good1_t1">
                                             <img src="./images/bad.png" class="resultado" id="bad1_t1">
@@ -299,7 +299,7 @@
                                     </tr>
                                     <tr>
                                         <td>Application Disponibility: </td>
-                                        <td id="Application_t1"></td>
+                                        <td id="Aplicación_t1"></td>
                                         <td>
                                             <img src="./images/good.png" class="resultado" id="good3_t1">
                                             <img src="./images/bad.png" class="resultado" id="bad3_t1">
@@ -307,7 +307,7 @@
                                     </tr>
                                     <tr>
                                         <td>Network Disponibility: </td>
-                                        <td id="Network_t1"></td>
+                                        <td id="Enlace Internet_t1"></td>
                                         <td>
                                             <img src="./images/good.png" class="resultado" id="good4_t1">
                                               <img src="./images/bad.png" class="resultado" id="bad4_t1">
@@ -315,7 +315,7 @@
                                     </tr>
                                     <tr>
                                         <td>Router Disponibility: </td>
-                                        <td id="Router_t1"></td>
+                                        <td id="Router Internet_t1"></td>
                                         <td>
                                             <img src="./images/good.png" class="resultado" id="good5_t1">
                                             <img src="./images/bad.png" class="resultado" id="bad5_t1">
@@ -664,16 +664,23 @@
 			request.onload = () => {
 
 				var response = JSON.parse(request.responseText);
-				if (request.readyState == 4 && request.status == "200") {
-					document.getElementById(`${response.name}`).innerHTML = Math.trunc(response.value * 100) + "%";
+				
+				var str = `${response.response.name}`;
+					console.log(str);
+					str += "_t1";
+					console.log(str);
+				
+				if (response.error == false) {
+					
+					document.getElementById(str).innerHTML = Math.trunc(response.response.value * 100) + "%";
 					
 					var texto = document.getElementById('calculo_t1').innerText;
 					var calculamesta = parseFloat(texto);
 					console.log(calculamesta);
-					calculamesta *= response.disponibility;
+					calculamesta *= response.response.value;
 					document.getElementById('calculo_t1').innerHTML = calculamesta;
 
-					if(response.disponibility * 100 > 20) {
+					if(response.response.value * 100 > 20) {
 						document.getElementById('good1_t1').style.display = "block";
 						document.getElementById('bad1_t1').style.display = "none";
 					}
@@ -685,7 +692,7 @@
 					document.getElementById('bad1_t1').style.display = "block";
 					document.getElementById('good1_t1').style.display = "none";
 					document.getElementById('calculo_t1').innerHTML = 0;
-					document.getElementById(`${response.name}`).innerHTML = "No response";
+					document.getElementById(str).innerHTML = "No response";
 					okStatus = -1;
 				}
 			};
@@ -698,7 +705,7 @@
 
 			request.open('POST', 'https://tiendauno-comercio-node.herokuapp.com/Nodo2', true);
 			request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-			request.ontimeout = () => { document.getElementById("Base de Datos").innerHTML = "No response"; okStatus = -1; }
+			request.ontimeout = () => { document.getElementById("Base de Datos_t1").innerHTML = "No response"; okStatus = -1; }
 			request.send(JSON.stringify(data));
 
 			///////////////termina Database
@@ -710,17 +717,25 @@
 			request2.onload = () => {
 
 				var response = JSON.parse(request2.responseText);
-				if (request2.readyState == 4 && request2.status == "200") {
+				console.log(response.error);
+				
+				var str = `${response.response.name}`;
+					console.log(str);
+					str += "_t1";
+					console.log(str);
+
+				
+				if (response.error == false) {
 					
-                    document.getElementById(`${response.name}`).innerHTML = Math.trunc(response.value * 100) + "%";
+                    document.getElementById(str).innerHTML = Math.trunc(response.response.value * 100) + "%";
 					
 					var texto = document.getElementById('calculo_t1').innerText;
 					var calculamesta = parseFloat(texto);
 					console.log(calculamesta);
-					calculamesta *= response.disponibility;
+					calculamesta *= response.response.value;
 					document.getElementById('calculo_t1').innerHTML = calculamesta;
 					
-					if(response.disponibility * 100 > 20) {
+					if(response.response.value * 100 > 20) {
 						document.getElementById('good2_t1').style.display = "block";
 						document.getElementById('bad2_t1').style.display = "none";
 					}
@@ -729,7 +744,7 @@
 						document.getElementById('good2_t1').style.display = "none";
 					}
 				} else {
-					document.getElementById(`${response.name}`).innerHTML = "No response";
+					document.getElementById(str).innerHTML = "No response";
 					okStatus = -1;
 					document.getElementById('bad2_t1').style.display = "block";
 					document.getElementById('good2_t1').style.display = "none";
@@ -755,16 +770,25 @@
 			request3.onload = () => {
 
 				var response = JSON.parse(request3.responseText);
-				if (request3.readyState == 4 && request3.status == "200") {
-					document.getElementById(`${response.name}`).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+				
+				var str = `${response.response.name}`;
+					console.log(str);
+					str += "_t1";
+					console.log(str);
+				
+				if (response.error == false) {
+					
+					
+					
+					document.getElementById(str).innerHTML = Math.trunc(response.response.value * 100) + "%";
 					
 					var texto = document.getElementById('calculo_t1').innerText;
 					var calculamesta = parseFloat(texto);
 					console.log(calculamesta);
-					calculamesta *= response.disponibility;
+					calculamesta *= response.response.value;
 					document.getElementById('calculo_t1').innerHTML = calculamesta;
 
-					if(response.disponibility * 100 > 20) {
+					if(response.response.value * 100 > 20) {
 						document.getElementById('good3_t1').style.display = "block";
 						document.getElementById('bad3_t1').style.display = "none";
 					}
@@ -773,7 +797,7 @@
 						document.getElementById('good3_t1').style.display = "none";
 					}
 				} else {
-					document.getElementById(`${response.name}`).innerHTML = "No response";
+					document.getElementById(str).innerHTML = "No response";
 					okStatus = -1;
 					document.getElementById('bad3_t1').style.display = "block";
 					document.getElementById('good3_t1').style.display = "none";
@@ -799,25 +823,33 @@
 			request4.onload = () => {
 
 				var response = JSON.parse(request4.responseText);
-				if (request4.readyState == 4 && request4.status == "200") {
-					document.getElementById(`${response.name}`).innerHTML = Math.trunc(response.value * 100) + "%";
+				
+				var str = `${response.response.name}`;
+					console.log(str);
+					str += "_t1";
+					console.log(str);
+				
+				if (response.error == false) {
+					
+					
+					document.getElementById(str).innerHTML = Math.trunc(response.response.value * 100) + "%";
 					
 					var texto = document.getElementById('calculo_t1').innerText;
 					var calculamesta = parseFloat(texto);
 					console.log(calculamesta);
-					calculamesta *= response.disponibility;
+					calculamesta *= response.response.value;
 					document.getElementById('calculo_t1').innerHTML = calculamesta;
 					
-					if(response.disponibility * 100 > 20) {
+					if(response.response.value * 100 > 20) {
 						document.getElementById('good4_t1').style.display = "block";
-						document.getElementById('bad4').style.display = "none";
+						document.getElementById('bad4_t1').style.display = "none";
 					}
 					else {
-						document.getElementById('bad4').style.display = "block";
+						document.getElementById('bad4_t1').style.display = "block";
 						document.getElementById('good4_t1').style.display = "none";
 					}
 				} else {
-					document.getElementById(`${response.name}`).innerHTML = "No response";
+					document.getElementById(str).innerHTML = "No response";
 					okStatus = -1;
 					document.getElementById('bad4_t1').style.display = "block";
 					document.getElementById('good4_t1').style.display = "none";
@@ -831,7 +863,7 @@
 
 			request4.open('POST', 'https://tiendauno-comercio-node.herokuapp.com/Nodo4', true);
 			request4.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-			request4.ontimeout = () => { document.getElementById("Network_t1").innerHTML = "No response"; okStatus = -1; }
+			request4.ontimeout = () => { document.getElementById("Enlace Internet_t1").innerHTML = "No response"; okStatus = -1; }
 			request4.send(JSON.stringify(data));
 
 			/////////////////termina network
@@ -842,16 +874,24 @@
 
 			request5_t1.onload = () => {
 				var response = JSON.parse(request5_t1.responseText);
-				if (request5_t1.readyState == 4 && request5_t1.status == "200") {
-					document.getElementById(`${response.name}`).innerHTML = Math.trunc(response.value * 100) + "%";
+				
+				var str = `${response.response.name}`;
+					console.log(str);
+					str += "_t1";
+					console.log(str);
+
+				if (response.error == false) {
+					
+					
+					document.getElementById(str).innerHTML = Math.trunc(response.response.value * 100) + "%";
 					
 					var texto = document.getElementById('calculo_t1').innerText;
 					var calculamesta = parseFloat(texto);
 					console.log(calculamesta);
-					calculamesta *= response.disponibility;
+					calculamesta *= response.response.value;
 					document.getElementById('calculo_t1').innerHTML = calculamesta;
 
-					if(response.disponibility * 100 > 20) {
+					if(response.response.value * 100 > 20) {
 						document.getElementById('good5_t1').style.display = "block";
 						document.getElementById('bad5_t1').style.display = "none";
 					}
@@ -863,7 +903,7 @@
 					document.getElementById('bad1_t1').style.display = "block";
 					document.getElementById('good1_t1').style.display = "none";
 					document.getElementById('calculo_t1').innerHTML = 0;
-					document.getElementById(`${response.name}`).innerHTML = "No response";
+					document.getElementById(str).innerHTML = "No response";
 					okStatus = -1;
 				}
 			};
