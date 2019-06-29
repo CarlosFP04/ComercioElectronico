@@ -335,7 +335,7 @@
                                 <div class="form-group project-details">
                                     <p>Consulta Tienda 2</p>
                                     <label for="date">Fecha:</label>
-                                    <input type="month" id="date">
+                                    <input type="month" id="date_t2">
                                     <br>
                                     <br>
                                     <button type="submit" class="btn btn-primary" id="botoncio_t2">Consultar</button>
@@ -345,50 +345,50 @@
                                     <table id="finally" border="2">
                                         <tr>
                                             <td>Database Disponibility: </td>
-                                            <td id="Database"></td>
+                                            <td id="Database_t2"></td>
                                             <td>
-                                                <img src="./images/good.png" class="resultado" id="good1">
-                                                <img src="./images/bad.png" class="resultado" id="bad1">
+                                                <img src="./images/good.png" class="resultado" id="good1_t2">
+                                                <img src="./images/bad.png" class="resultado" id="bad1_t2">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Hardware Disponibility: </td>
-                                            <td id="Hardware"></td>
+                                            <td id="Hardware_t2"></td>
                                             <td>
-                                                <img src="./images/good.png" class="resultado" id="good2">
-                                                <img src="./images/bad.png" class="resultado" id="bad2">
+                                                <img src="./images/good.png" class="resultado" id="good2_t2">
+                                                <img src="./images/bad.png" class="resultado" id="bad2_t2">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Application Disponibility: </td>
-                                            <td id="Application"></td>
+                                            <td id="Application_t2"></td>
                                             <td>
-                                                <img src="./images/good.png" class="resultado" id="good3">
-                                                <img src="./images/bad.png" class="resultado" id="bad3">
+                                                <img src="./images/good.png" class="resultado" id="good3_t2">
+                                                <img src="./images/bad.png" class="resultado" id="bad3_t2">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Network Disponibility: </td>
-                                            <td id="Network"></td>
+                                            <td id="Network_t2"></td>
                                             <td>
-                                                <img src="./images/good.png" class="resultado" id="good4">
-                                                  <img src="./images/bad.png" class="resultado" id="bad4">
+                                                <img src="./images/good.png" class="resultado" id="good4_t2">
+                                                  <img src="./images/bad.png" class="resultado" id="bad4_t2">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Router Disponibility: </td>
-                                            <td id="Router"></td>
+                                            <td id="Router_t2"></td>
                                             <td>
-                                                <img src="./images/good.png" class="resultado" id="good5">
-                                                <img src="./images/bad.png" class="resultado" id="bad5">
+                                                <img src="./images/good.png" class="resultado" id="good5_t2">
+                                                <img src="./images/bad.png" class="resultado" id="bad5_t2">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Total Disponibility: </td>
-                                            <td id="Total"></td>
+                                            <td id="Total_t2"></td>
                                         </tr>
                                         <tr>
-                                            <td id="calculo">1</td>
+                                            <td id="calculo_t2">1</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -935,6 +935,313 @@
 
 
 	</script>
+
+<script type="text/javascript">
+	const form_t2 = {
+		date: document.getElementById('date_t2'),
+		submit: document.getElementById('botoncio_t2')
+	};
+	form_t2.submit.addEventListener('click', doAll_t2) 
+	
+	
+	
+	function doAll_t2() {
+		const request = new XMLHttpRequest();
+		var okStatus;
+
+		request.timeout = 1000;
+
+		request.onload = () => {
+			
+			var response = JSON.parse(request.responseText);
+			
+			var str = `${response.name}`;
+				console.log(str);
+				str += "_t2";
+				console.log(str);
+			
+			if (response.error == false) {
+				
+				document.getElementById(str).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+				
+				var texto = document.getElementById('calculo_t2').innerText;
+				var calculamesta = parseFloat(texto);
+				console.log(calculamesta);
+				calculamesta *= response.disponibility;
+				document.getElementById('calculo_t2').innerHTML = calculamesta;
+
+				if(response.disponibility * 100 > 20) {
+					document.getElementById('good1_t2').style.display = "block";
+					document.getElementById('bad1_t2').style.display = "none";
+				}
+				else {
+					document.getElementById('bad1_t2').style.display = "block";
+					document.getElementById('good1_t2').style.display = "none";
+				}
+			} else {
+				document.getElementById('bad1_t2').style.display = "block";
+				document.getElementById('good1_t2').style.display = "none";
+				document.getElementById('calculo_t2').innerHTML = 0;
+				document.getElementById(str).innerHTML = "No response";
+				okStatus = -1;
+			}
+		};
+
+		var data = {};
+		data.name = "Database";
+		data.date = `${form_t2.date.value}`;
+
+		console.log(data);
+
+		var link = "https://sgda.herokuapp.com/rs/component?";
+		link += "name=" + data.name + "&date=" + data.date;
+		console.log(link); 
+
+		request.open('GET',link, true);
+
+		//request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		request.ontimeout = () => { document.getElementById("Database_t2").innerHTML = "No response"; okStatus = -1; }
+		//request.send();
+		console.log(request.response + "  -----> response");
+		///////////////termina Database
+
+		const request2 = new XMLHttpRequest();
+
+		request2.timeout = 1000;
+
+		request2.onload = () => {
+
+			var response = JSON.parse(request2.responseText);
+			console.log(response.error);
+			
+			var str = `${response.name}`;
+				console.log(str);
+				str += "_t2";
+				console.log(str);
+
+			
+			if (response.error == false) {
+				
+				document.getElementById(str).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+				
+				var texto = document.getElementById('calculo_t2').innerText;
+				var calculamesta = parseFloat(texto);
+				console.log(calculamesta);
+				calculamesta *= response.disponibility;
+				document.getElementById('calculo_t2').innerHTML = calculamesta;
+				
+				if(response.disponibility * 100 > 20) {
+					document.getElementById('good2_t2').style.display = "block";
+					document.getElementById('bad2_t2').style.display = "none";
+				}
+				else {
+					document.getElementById('bad2_t2').style.display = "block";
+					document.getElementById('good2_t2').style.display = "none";
+				}
+			} else {
+				document.getElementById(str).innerHTML = "No response";
+				okStatus = -1;
+				document.getElementById('bad2_t2').style.display = "block";
+				document.getElementById('good2_t2').style.display = "none";
+				document.getElementById('calculo_t2').innerHTML = 0;
+			}
+		};
+
+		data.name = "Hardware";
+
+		console.log(data);
+
+		var link = "https://sgda.herokuapp.com/rs/component?";
+		link += "name=" + data.name + "&date=" + data.date;
+		console.log(link); 
+
+		request.open('GET',link, true);
+		request2.ontimeout = () => { document.getElementById("Hardware_t2").innerHTML = "No response"; okStatus = -1; }
+		//request2.send(JSON.stringify(data));
+
+		//////////////termina Hardware
+
+		const request3 = new XMLHttpRequest();
+
+		request3.timeout = 1000;
+
+		request3.onload = () => {
+
+			var response = JSON.parse(request3.responseText);
+			
+			var str = `${response.name}`;
+				console.log(str);
+				str += "_t2";
+				console.log(str);
+			
+			if (response.name == false) {
+				
+				
+				
+				document.getElementById(str).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+				
+				var texto = document.getElementById('calculo_t2').innerText;
+				var calculamesta = parseFloat(texto);
+				console.log(calculamesta);
+				calculamesta *= response.disponibility;
+				document.getElementById('calculo_t2').innerHTML = calculamesta;
+
+				if(response.disponibility * 100 > 20) {
+					document.getElementById('good3_t2').style.display = "block";
+					document.getElementById('bad3_t2').style.display = "none";
+				}
+				else {
+					document.getElementById('bad3_t2').style.display = "block";
+					document.getElementById('good3_t2').style.display = "none";
+				}
+			} else {
+				document.getElementById(str).innerHTML = "No response";
+				okStatus = -1;
+				document.getElementById('bad3_t2').style.display = "block";
+				document.getElementById('good3_t2').style.display = "none";
+				document.getElementById('calculo_t2').innerHTML = 0;
+			}
+		};
+
+		data.name = "Application";
+
+		console.log(data);
+
+		var link = "https://sgda.herokuapp.com/rs/component?";
+		link += "name=" + data.name + "&date=" + data.date;
+		console.log(link); 
+
+		request.open('GET',link, true);
+		request3.ontimeout = () => { document.getElementById("Application_t2").innerHTML = "No response"; okStatus = -1; }
+		//request3.send(JSON.stringify(data));
+
+		///////////////termina application
+
+		const request4 = new XMLHttpRequest();
+
+		request4.timeout = 1000;
+
+		request4.onload = () => {
+
+			var response = JSON.parse(request4.responseText);
+			
+			var str = `${response.name}`;
+				console.log(str);
+				str += "_t2";
+				console.log(str);
+			
+			if (response.error == false) {
+				
+				
+				document.getElementById(str).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+				
+				var texto = document.getElementById('calculo_t2').innerText;
+				var calculamesta = parseFloat(texto);
+				console.log(calculamesta);
+				calculamesta *= response.disponibility;
+				document.getElementById('calculo_t2').innerHTML = calculamesta;
+				
+				if(response.disponibility * 100 > 20) {
+					document.getElementById('good4_t2').style.display = "block";
+					document.getElementById('bad4_t2').style.display = "none";
+				}
+				else {
+					document.getElementById('bad4_t2').style.display = "block";
+					document.getElementById('good4_t2').style.display = "none";
+				}
+			} else {
+				document.getElementById(str).innerHTML = "No response";
+				okStatus = -1;
+				document.getElementById('bad4_t2').style.display = "block";
+				document.getElementById('good4_t2').style.display = "none";
+				document.getElementById('calculo_t2').innerHTML = 0;
+			}
+		};
+
+		data.name = "Network";
+
+		console.log(data);
+
+		var link = "https://sgda.herokuapp.com/rs/component?";
+		link += "name=" + data.name + "&date=" + data.date;
+		console.log(link); 
+
+		request.open('GET',link, true);
+		request4.ontimeout = () => { document.getElementById("Network_t2").innerHTML = "No response"; okStatus = -1; }
+		//request4.send(JSON.stringify(data));
+
+		/////////////////termina network
+
+		const request5_t2 = new XMLHttpRequest();
+
+		request5_t2.timeout = 1000;
+
+		request5_t2.onload = () => {
+			var response = JSON.parse(request5_t2.responseText);
+			
+			var str = `${response.name}`;
+				console.log(str);
+				str += "_t2";
+				console.log(str);
+
+			if (response.error == false) {
+				
+				
+				document.getElementById(str).innerHTML = Math.trunc(response.disponibility * 100) + "%";
+				
+				var texto = document.getElementById('calculo_t2').innerText;
+				var calculamesta = parseFloat(texto);
+				console.log(calculamesta);
+				calculamesta *= response.disponibility;
+				document.getElementById('calculo_t2').innerHTML = calculamesta;
+
+				if(response.disponibility * 100 > 20) {
+					document.getElementById('good5_t2').style.display = "block";
+					document.getElementById('bad5_t2').style.display = "none";
+				}
+				else {
+					document.getElementById('bad5_t2').style.display = "block";
+					document.getElementById('good5_t2').style.display = "none";
+				}
+			} else {
+				document.getElementById('bad1_t2').style.display = "block";
+				document.getElementById('good1_t2').style.display = "none";
+				document.getElementById('calculo_t2').innerHTML = 0;
+				document.getElementById(str).innerHTML = "No response";
+				okStatus = -1;
+			}
+		};
+
+		data.name = "Router";
+
+		console.log(data);
+
+		var link = "https://sgda.herokuapp.com/rs/component?";
+		link += "name=" + data.name + "&date=" + data.date;
+		console.log(link); 
+
+		request.open('GET',link, true);
+		request5_t2.ontimeout = () => { document.getElementById("Router_t2").innerHTML = "No response"; okStatus = -1; }
+		//request5_t2.send(JSON.stringify(data));
+
+		console.log(okStatus);
+		if (okStatus == -1) {
+			document.getElementById("Total_t2").innerHTML = "0%";
+		}
+
+		
+
+		setTimeout(function(){
+			var texto = document.getElementById('calculo_t2').innerText;
+			var total = parseFloat(texto);
+			console.log(texto);
+			document.getElementById('Total_t2').innerHTML = Math.trunc(total * 100) + "%";
+			document.getElementById('calculo_t2').innerHTML = 1;
+			}, 1500);
+	};
+
+
+</script>
 
 </body>
 
